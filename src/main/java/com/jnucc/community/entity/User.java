@@ -11,6 +11,8 @@ public class User {
     private int type;
     private int status;
     private String activationCode;
+    private String headerUrl;
+    private Date createTime;
 
     @Override
     public String toString() {
@@ -51,9 +53,6 @@ public class User {
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
     }
-
-    private String headerUrl;
-    private Date createTime;
 
     public int getId() {
         return id;
