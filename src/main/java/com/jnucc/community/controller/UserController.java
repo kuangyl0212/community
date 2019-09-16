@@ -4,7 +4,12 @@ import com.jnucc.community.constant.Msg;
 import com.jnucc.community.constant.UserState;
 import com.jnucc.community.entity.User;
 import com.jnucc.community.service.UserService;
+import com.jnucc.community.util.CommunityUtil;
+import com.jnucc.community.util.UserHolder;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -13,10 +18,12 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.*;
 import java.util.Map;
 
 import static com.jnucc.community.constant.Config.DEFAULT_EXPIRED;
@@ -28,6 +35,17 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserHolder userHolder;
+
+    @Value("${community.upload}")
+    private String uploadPath;
+
+    @Value("${community.domain}")
+    private String domain;
+
+    private Logger logger = LoggerFactory.getLogger(UserController.class);
 
 //    @Value("{server.servlet")
 
@@ -121,5 +139,55 @@ public class UserController {
     public String doLogout(@CookieValue("ticket") String ticket) {
         userService.destroyTicket(ticket);
         return "redirect:/user/login";
+    }
+
+    @RequestMapping(value = "setting", method = RequestMethod.GET)
+    public String getSettingPage() {
+        return "/site/setting";
+    }
+
+    @RequestMapping(value = "upload", method = RequestMethod.POST)
+    public String uploadHeaderImage(MultipartFile headerImage, Model model) throws IOException {
+        if (headerImage == null) {
+            model.addAttribute("uploadError", "file empty");
+            return "/site/setting";
+        }
+        String fileName = headerImage.getOriginalFilename();
+        String suffix = fileName.substring(fileName.lastIndexOf('.'));
+        if (StringUtils.isBlank(suffix)) {
+            model.addAttribute("uploadError", "invalid image format");
+            return "/site/setting";
+        }
+        fileName = CommunityUtil.generateUUID() + suffix;
+        File dest = new File(uploadPath + fileName);
+        headerImage.transferTo(dest);
+
+        User user = userHolder.getUser();
+        String headerUrl = domain + "/user/header/" + fileName;
+        userService.updateHeaderUrl(user.getId(), headerUrl);
+
+        return "redirect:/index";
+    }
+
+    @RequestMapping(value = "/header/{fileName}", method = RequestMethod.GET)
+    public void getHeader(@PathVariable("fileName") String fileName, HttpServletResponse response)  {
+        String filePath = uploadPath + "/" + fileName;
+        String suffix = fileName.substring(fileName.lastIndexOf('.'));
+
+        response.setContentType("image/" + suffix);
+        try (
+                FileInputStream inputStream = new FileInputStream(filePath);
+                OutputStream outputStream = response.getOutputStream();
+                )
+        {
+
+            byte[] buffer = new byte[1024];
+            int b = 0;
+            while ((b = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, b);
+            }
+        } catch (IOException e) {
+            logger.debug("get header failed: " + e.getMessage());
+        }
     }
 }

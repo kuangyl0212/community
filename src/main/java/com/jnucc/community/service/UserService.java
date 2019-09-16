@@ -33,9 +33,6 @@ public class UserService {
     @Value("${community.domain}")
     private String domain;
 
-    @Value("${community.protocol}")
-    private String protocol;
-
     public User findByUserId(int userId) {
         return userMapper.selectById(userId);
     }
@@ -122,7 +119,7 @@ public class UserService {
     private void sendActivationEmail(String email, int userId, String activationCode) {
         String activationUrl = String.format(
                 "%s://%s/user/activate/%d/%s",
-                protocol, domain, userId, activationCode);
+                domain, userId, activationCode);
         Map<String, String> emailPayload = new HashMap<>();
         emailPayload.put("activate_url", activationUrl);
         mailClient.sendMail(email, "Account activation", "/mail/activation", emailPayload);
@@ -192,8 +189,16 @@ public class UserService {
         return text;
     }
 
-    public void destroyTicket(String ticket) {
-        ticketMapper.updateStatus(ticket, 1);
+    public int destroyTicket(String ticket) {
+        return ticketMapper.updateStatus(ticket, 1);
+    }
+
+    public LoginTicket findTicket(String ticket) {
+        return ticketMapper.findTicket(ticket);
+    }
+
+    public int updateHeaderUrl(int userId, String headerUrl) {
+        return userMapper.updateHeaderUrl(userId, headerUrl);
     }
 }
 
