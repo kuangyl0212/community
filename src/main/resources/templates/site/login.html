@@ -183,7 +183,7 @@
 	<script th:src="@{/js/global.js}"></script>
 	<script>
 		function refresh_captch() {
-			var path = CONYENT_PATH + "/captcha?t=" + Date.now();
+			var path = CONTENT_PATH + "/captcha?t=" + Date.now();
 			$("#captcha").attr("src", path);
 		}
 	</script>

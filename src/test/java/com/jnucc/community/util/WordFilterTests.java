@@ -1,4 +1,4 @@
-package com.jnucc.community.service;
+package com.jnucc.community.util;
 
 import com.jnucc.community.CommunityApplication;
 import org.junit.Test;
@@ -13,13 +13,17 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration(classes = CommunityApplication.class)
-public class UserServiceTests {
+public class WordFilterTests {
 
     @Autowired
-    private UserService userService;
+    private WordFilter filter;
 
-    public void testInsertUser() {
-
+    @Test
+    public void testFiter() {
+        String s1 = "我要吸毒，我要赌博！";
+        String s2 = "我要吸￥毒，我要赌￥博！";
+        String expected = "我要***，我要***！";
+        assertEquals(expected, filter.filter(s1));
+        assertEquals(expected, filter.filter(s2));
     }
-
 }

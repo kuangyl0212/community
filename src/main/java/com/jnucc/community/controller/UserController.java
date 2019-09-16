@@ -190,4 +190,9 @@ public class UserController {
             logger.debug("get header failed: " + e.getMessage());
         }
     }
+
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public String getProfilePage() {
+        return "/site/profile";
+    }
 }

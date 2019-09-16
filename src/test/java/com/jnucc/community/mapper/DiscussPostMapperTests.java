@@ -31,4 +31,16 @@ public class DiscussPostMapperTests {
     public void testTotalRows() {
         System.out.println(discussPostMapper.totalRows(0));
     }
+
+    @Test
+    public void testCreatePost() {
+        int userId = 164;
+        String title = "test";
+        String content = "test content";
+        DiscussPost post = new DiscussPost();
+        post.setUserId(userId);
+        post.setTitle(title);
+        post.setContent(content);
+        discussPostMapper.insert(post);
+    }
 }

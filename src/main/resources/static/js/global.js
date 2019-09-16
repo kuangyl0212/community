@@ -1,4 +1,4 @@
-CONYENT_PATH = "";
+CONTENT_PATH = "";
 
 window.alert = function(message) {
 	if(!$(".alert-box").length) {
