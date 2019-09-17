@@ -1,7 +1,7 @@
 package com.jnucc.community.service;
 
-import com.jnucc.community.dao.DiscussPostMapper;
-import com.jnucc.community.entity.DiscussPost;
+import com.jnucc.community.mapper.PostMapper;
+import com.jnucc.community.entity.Post;
 import com.jnucc.community.util.WordFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,14 +13,14 @@ import java.util.Date;
 public class PostService {
 
     @Autowired
-    private DiscussPostMapper mapper;
+    private PostMapper mapper;
 
     @Autowired
     private WordFilter wordFilter;
 
     public int create(int userId, String title, String content) {
 
-        DiscussPost post = new DiscussPost();
+        Post post = new Post();
         post.setUserId(userId);
 
         title = HtmlUtils.htmlEscape(title);
@@ -39,5 +39,14 @@ public class PostService {
 
         int rows = mapper.insert(post);
         return rows;
+    }
+
+    public Post findById(int postId) {
+        return mapper.selectById(postId);
+    }
+
+
+    public int updateCommentCount(int postId, int commentCount) {
+        return mapper.updateCommentCount(postId, commentCount);
     }
 }

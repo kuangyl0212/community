@@ -1,6 +1,6 @@
 package com.jnucc.community.controller;
 
-import com.jnucc.community.entity.DiscussPost;
+import com.jnucc.community.entity.Post;
 import com.jnucc.community.entity.Page;
 import com.jnucc.community.entity.User;
 import com.jnucc.community.service.HomeService;
@@ -28,9 +28,9 @@ public class HomeController {
 //        page = new Page();
         page.setPath("/index");
         page.setRows(homeService.getTotalRows());
-        List<DiscussPost> postList = homeService.getPosts(page.getOffset(), page.getLimit());
+        List<Post> postList = homeService.getPosts(page.getOffset(), page.getLimit());
         List<Map<String, Object>> discussPosts = new ArrayList<>();
-        for (DiscussPost post : postList) {
+        for (Post post : postList) {
             Map<String, Object> postAndUser = new HashMap<>();
             User user = userService.findByUserId(post.getUserId());
             postAndUser.put("post", post);

@@ -1,4 +1,4 @@
-package com.jnucc.community.dao;
+package com.jnucc.community.mapper;
 
 import com.jnucc.community.entity.User;
 import org.apache.ibatis.annotations.Mapper;

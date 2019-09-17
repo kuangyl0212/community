@@ -1,4 +1,4 @@
-package com.jnucc.community.dao;
+package com.jnucc.community.mapper;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;

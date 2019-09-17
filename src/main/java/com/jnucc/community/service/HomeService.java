@@ -1,7 +1,7 @@
 package com.jnucc.community.service;
 
-import com.jnucc.community.dao.DiscussPostMapper;
-import com.jnucc.community.entity.DiscussPost;
+import com.jnucc.community.mapper.PostMapper;
+import com.jnucc.community.entity.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,13 +10,13 @@ import java.util.List;
 @Service
 public class HomeService {
     @Autowired
-    private DiscussPostMapper discussPostMapper;
+    private PostMapper postMapper;
 
-    public List<DiscussPost> getPosts(int offset, int limit) {
-        return discussPostMapper.selectByUserId(0, offset, limit);
+    public List<Post> getPosts(int offset, int limit) {
+        return postMapper.selectByUserId(0, offset, limit);
     }
 
     public int getTotalRows() {
-        return discussPostMapper.totalRows(0);
+        return postMapper.totalRows(0);
     }
 }

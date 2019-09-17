@@ -2,7 +2,7 @@ package com.jnucc.community.entity;
 
 import java.util.Date;
 
-public class LoginTicket {
+public class Ticket {
 
     private int id;
     private int userId;
@@ -52,7 +52,7 @@ public class LoginTicket {
 
     @Override
     public String toString() {
-        return "LoginTicket{" +
+        return "Ticket{" +
                 "id=" + id +
                 ", userId=" + userId +
                 ", ticket='" + ticket + '\'' +

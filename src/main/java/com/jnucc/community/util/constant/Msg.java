@@ -1,4 +1,4 @@
-package com.jnucc.community.constant;
+package com.jnucc.community.util.constant;
 
 public class Msg {
     public static final String userRegisterSuccess = "Register successful, " +

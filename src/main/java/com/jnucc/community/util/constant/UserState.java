@@ -1,4 +1,4 @@
-package com.jnucc.community.constant;
+package com.jnucc.community.util.constant;
 
 public enum UserState {
     OK("success", 0),

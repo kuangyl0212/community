@@ -1,6 +1,6 @@
 package com.jnucc.community;
 
-import com.jnucc.community.dao.AlphaDao;
+import com.jnucc.community.mapper.AlphaDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.BeansException;
@@ -11,7 +11,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-import sun.nio.ch.SelectorImpl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

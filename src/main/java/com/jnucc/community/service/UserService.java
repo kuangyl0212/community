@@ -1,9 +1,9 @@
 package com.jnucc.community.service;
 
-import com.jnucc.community.constant.UserState;
-import com.jnucc.community.dao.LoginTicketMapper;
-import com.jnucc.community.dao.UserMapper;
-import com.jnucc.community.entity.LoginTicket;
+import com.jnucc.community.util.constant.UserState;
+import com.jnucc.community.mapper.TicketMapper;
+import com.jnucc.community.mapper.UserMapper;
+import com.jnucc.community.entity.Ticket;
 import com.jnucc.community.entity.User;
 import com.jnucc.community.util.CommunityUtil;
 import com.jnucc.community.util.MailClient;
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +24,7 @@ public class UserService {
     private UserMapper userMapper;
 
     @Autowired
-    LoginTicketMapper ticketMapper;
+    TicketMapper ticketMapper;
 
     @Autowired
     private MailClient mailClient;
@@ -179,7 +178,7 @@ public class UserService {
     }
 
     private String generateTicket(int userId, int expiredSeconds) {
-        LoginTicket ticket = new LoginTicket();
+        Ticket ticket = new Ticket();
         ticket.setUserId(userId);
         String text = CommunityUtil.generateUUID();
         ticket.setTicket(text);
@@ -193,7 +192,7 @@ public class UserService {
         return ticketMapper.updateStatus(ticket, 1);
     }
 
-    public LoginTicket findTicket(String ticket) {
+    public Ticket findTicket(String ticket) {
         return ticketMapper.findTicket(ticket);
     }
 

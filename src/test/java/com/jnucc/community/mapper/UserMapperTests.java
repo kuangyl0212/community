@@ -1,7 +1,6 @@
 package com.jnucc.community.mapper;
 
 import com.jnucc.community.CommunityApplication;
-import com.jnucc.community.dao.UserMapper;
 import com.jnucc.community.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;

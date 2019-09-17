@@ -1,6 +1,6 @@
 package com.jnucc.community.controller.interceptor;
 
-import com.jnucc.community.entity.LoginTicket;
+import com.jnucc.community.entity.Ticket;
 import com.jnucc.community.entity.User;
 import com.jnucc.community.service.UserService;
 import com.jnucc.community.util.CommunityUtil;
@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.crypto.Data;
 import java.util.Date;
 
 @Component
@@ -28,7 +27,7 @@ public class UserInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String ticket = CommunityUtil.getCookieValueFrom(request, "ticket");
         if (ticket != null) {
-            LoginTicket loginTicket = userService.findTicket(ticket);
+            Ticket loginTicket = userService.findTicket(ticket);
             if (isTicketValid(loginTicket)) {
                 User user = userService.findByUserId(loginTicket.getUserId());
                 userHolder.setUser(user);
@@ -45,7 +44,7 @@ public class UserInterceptor implements HandlerInterceptor {
         if (user != null) modelAndView.addObject("loginUser", user);
     }
 
-    private boolean isTicketValid(LoginTicket ticket) {
+    private boolean isTicketValid(Ticket ticket) {
         return ticket != null && ticket.getStatus() == 0 && ticket.getExpired().after(new Date());
     }
 }

@@ -1,13 +1,12 @@
 package com.jnucc.community.controller;
 
-import com.jnucc.community.constant.Msg;
-import com.jnucc.community.constant.UserState;
+import com.jnucc.community.util.constant.Msg;
+import com.jnucc.community.util.constant.UserState;
 import com.jnucc.community.entity.User;
 import com.jnucc.community.service.UserService;
 import com.jnucc.community.util.CommunityUtil;
 import com.jnucc.community.util.UserHolder;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,8 @@ import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.Map;
 
-import static com.jnucc.community.constant.Config.DEFAULT_EXPIRED;
-import static com.jnucc.community.constant.Config.REMEMBER_EXPIRED;
+import static com.jnucc.community.util.constant.Config.DEFAULT_EXPIRED;
+import static com.jnucc.community.util.constant.Config.REMEMBER_EXPIRED;
 
 @Controller
 @RequestMapping("user")

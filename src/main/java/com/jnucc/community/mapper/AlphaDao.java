@@ -1,4 +1,4 @@
-package com.jnucc.community.dao;
+package com.jnucc.community.mapper;
 
 public interface AlphaDao {
     public String select();

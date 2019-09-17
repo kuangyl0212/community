@@ -1,8 +1,7 @@
 package com.jnucc.community.mapper;
 
 import com.jnucc.community.CommunityApplication;
-import com.jnucc.community.dao.DiscussPostMapper;
-import com.jnucc.community.entity.DiscussPost;
+import com.jnucc.community.entity.Post;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,21 +14,21 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration(classes = CommunityApplication.class)
-public class DiscussPostMapperTests {
+public class PostMapperTests {
     @Autowired
-    private DiscussPostMapper discussPostMapper;
+    private PostMapper postMapper;
 
     @Test
     public void testSelect() {
-        List<DiscussPost> list = discussPostMapper.selectByUserId(0, 0, 10);
-        for (DiscussPost post : list) {
+        List<Post> list = postMapper.selectByUserId(0, 0, 10);
+        for (Post post : list) {
             System.out.println(post.getTitle());
         }
     }
 
     @Test
     public void testTotalRows() {
-        System.out.println(discussPostMapper.totalRows(0));
+        System.out.println(postMapper.totalRows(0));
     }
 
     @Test
@@ -37,10 +36,10 @@ public class DiscussPostMapperTests {
         int userId = 164;
         String title = "test";
         String content = "test content";
-        DiscussPost post = new DiscussPost();
+        Post post = new Post();
         post.setUserId(userId);
         post.setTitle(title);
         post.setContent(content);
-        discussPostMapper.insert(post);
+        postMapper.insert(post);
     }
 }

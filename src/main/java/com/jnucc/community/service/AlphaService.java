@@ -1,6 +1,6 @@
 package com.jnucc.community.service;
 
-import com.jnucc.community.dao.AlphaDao;
+import com.jnucc.community.mapper.AlphaDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

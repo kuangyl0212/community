@@ -2,7 +2,7 @@ package com.jnucc.community.entity;
 
 import java.util.Date;
 
-public class DiscussPost {
+public class Post {
     private int id;
     private int userId;
     private String title;
