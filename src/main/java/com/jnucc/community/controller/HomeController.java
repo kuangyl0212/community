@@ -6,6 +6,7 @@ import com.jnucc.community.entity.User;
 import com.jnucc.community.service.HomeService;
 import com.jnucc.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,16 +17,15 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class HomeController {
+public class HomeController implements ErrorController {
 
     @Autowired
     private HomeService homeService;
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "index", method = RequestMethod.GET)
+    @RequestMapping(value = {"/index", "/"}, method = RequestMethod.GET)
     String home(Model model, Page page) {
-//        page = new Page();
         page.setPath("/index");
         page.setRows(homeService.getTotalRows());
         List<Post> postList = homeService.getPosts(page.getOffset(), page.getLimit());
@@ -40,4 +40,16 @@ public class HomeController {
         model.addAttribute("posts", discussPosts);
         return "index";
     }
+
+    @RequestMapping("/error")
+    public String handleError() {
+        //do something like logging
+        return "/site/error/500";
+    }
+
+    @Override
+    public String getErrorPath() {
+        return "/error";
+    }
+
 }
